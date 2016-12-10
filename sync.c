@@ -1,13 +1,13 @@
 // sync.c
 
 //==========================================================
-// Šeí’è‹`‚È‚Ç
+// å„ç¨®å®šç¾©ãªã©
 //----------------------------------------------------------
-#define VERSION     "2.05"                      // ‚±‚Ìƒtƒ@ƒCƒ‹––”ö‚ÉÚ×‚ğ
-#define SHORTBUF    30                          // –¼‘O‚È‚Ç’Z‚¢•¶š—ñ
-#define LONGBUF     200                         // ƒRƒ}ƒ“ƒh‚È‚Ç’·‚¢•¶š—ñ
-#define JSONFILE    "data.json"                 // ƒfƒBƒŒƒNƒgƒŠƒpƒX“™ƒf[ƒ^
-#define LOGFILE     "log.csv"                   // ‘—óMƒƒO
+#define VERSION     "2.05"                      // ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«æœ«å°¾ã«è©³ç´°ã‚’
+#define SHORTBUF    30                          // åå‰ãªã©çŸ­ã„æ–‡å­—åˆ—
+#define LONGBUF     200                         // ã‚³ãƒãƒ³ãƒ‰ãªã©é•·ã„æ–‡å­—åˆ—
+#define JSONFILE    "data.json"                 // ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹ç­‰ãƒ‡ãƒ¼ã‚¿
+#define LOGFILE     "log.csv"                   // é€å—ä¿¡ãƒ­ã‚°
 
 //==========================================================
 
@@ -47,12 +47,12 @@ int main( int argc, char **argv )
 	show_last_log();
 	printf("\n");
 
-	// jsonƒf[ƒ^“Ç‚İ‚İ-----------------------------------
+	// jsonãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿-----------------------------------
 	if ( read_json( &json ) == -1 ) {
 		quit( json, EXIT_FAILURE, interactive );
 	}
 
-	// ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ˆø”‰ğ“Ç-------------------------------
+	// ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³å¼•æ•°è§£èª­-------------------------------
 	json_user = NULL;
 	for ( i = 1; i < argc; i++ ) {
 		if ( strcmp( argv[i], "-u" ) == 0 ||
@@ -86,7 +86,7 @@ int main( int argc, char **argv )
 		}
 	}
 
-	// “Áêƒ‚[ƒh“®ì---------------------------------------
+	// ç‰¹æ®Šãƒ¢ãƒ¼ãƒ‰å‹•ä½œ---------------------------------------
 	switch ( mode ) {
 	case mode_help:
 		printf( "usage: sync.exe [-U|-D] [-u username]\n" );
@@ -121,7 +121,7 @@ int main( int argc, char **argv )
 		break;
 	}
 	
-	// ‚Ç‚Ìƒ†[ƒU-------------------------------------------
+	// ã©ã®ãƒ¦ãƒ¼ã‚¶-------------------------------------------
 	if ( json_user == NULL ) {
 		if ( select( &json_user, json_select_object( json, "dir" ),
 					"Who are you?", false ) == 1 ) {
@@ -129,7 +129,7 @@ int main( int argc, char **argv )
 		}
 	}
 
-	// ƒƒCƒ“ƒ‹[ƒv-----------------------------------------
+	// ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—-----------------------------------------
 	while ( 1 ) {
 		puts("\n< Main Menu >");
 		printf("Hello %s. command? [ Down / Up / Log / Tree / Exit / ? ]", 
@@ -137,32 +137,32 @@ int main( int argc, char **argv )
 		fgets( buf, SHORTBUF , stdin );
 		chop( buf );
 		
-		// DropBox‚©‚çƒ_ƒEƒ“ƒ[ƒh---------------------------
+		// DropBoxã‹ã‚‰ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰---------------------------
 		if ( strcasecmp( buf, "down" ) == 0 || strcasecmp( buf, "d" ) == 0 )
 		{
 			copy_int( json, json_user, cp_down );
 		}
-		// DropBox‚ÖƒAƒbƒvƒ[ƒh-----------------------------
+		// DropBoxã¸ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰-----------------------------
 		else if ( strcasecmp( buf, "up" ) == 0 || strcasecmp( buf, "u" ) == 0 )
 		{
 			copy_int( json, json_user, cp_up );
 		}
-		// ƒƒO•\¦------------------------------------------
+		// ãƒ­ã‚°è¡¨ç¤º------------------------------------------
 		else if ( strcasecmp( buf, "log" ) == 0 || strcasecmp( buf, "l" ) == 0 )
 		{
 			show_log( json );
 		}
-		// JSONƒf[ƒ^ƒcƒŠ[•\¦------------------------------
+		// JSONãƒ‡ãƒ¼ã‚¿ãƒ„ãƒªãƒ¼è¡¨ç¤º------------------------------
 		else if ( strcasecmp( buf, "tree" ) == 0 || strcasecmp( buf, "t" ) == 0 )
 		{
 			json_show( stdout, json, JSON_OBJECT, "    ", showex_ex );
 		}
-		// I—¹----------------------------------------------
+		// çµ‚äº†----------------------------------------------
 		else if ( strcasecmp( buf, "exit" ) == 0 || strcasecmp( buf, "e" ) == 0 )
 		{
 			break;
 		}
-		// à–¾----------------------------------------------
+		// èª¬æ˜----------------------------------------------
 		else if ( strcmp( buf, "?" ) == 0 )
 		{
 			puts("commands...");
@@ -267,7 +267,7 @@ int select( json_object_ptr *sel, json_object_ptr json, char *ask, _Bool all )
 	{
 		json_dir = json_dir_top;
 
-		printf( "%s [ ", ask );		// ¿–â•¶
+		printf( "%s [ ", ask );		// è³ªå•æ–‡
 		while ( json_dir != NULL )
 		{
 			printf( "%s / ", json_dir->string );
@@ -346,9 +346,9 @@ void copy_int( json_object_ptr json, json_object_ptr user, enum direction dir )
 			continue;
 		}
 
-		// ƒRƒs[Às‚ÌŠÖ”ŒÄ‚Ño‚µ
+		// ã‚³ãƒ”ãƒ¼å®Ÿè¡Œã®é–¢æ•°å‘¼ã³å‡ºã—
 		copy_file( user, game, dir );
-		// ƒƒO‘‚«‚İ
+		// ãƒ­ã‚°æ›¸ãè¾¼ã¿
 		write_log( user->string, game->string, dir );
 	}// while (1) : < xxx Mode > loop
 }
@@ -378,7 +378,7 @@ void copy_all( json_object_ptr json, json_object_ptr user, enum direction dir )
 					game_list->string );
 		}
 		else {
-			// ƒRƒs[Às‚ÌŠÖ”ŒÄ‚Ño‚µ
+			// ã‚³ãƒ”ãƒ¼å®Ÿè¡Œã®é–¢æ•°å‘¼ã³å‡ºã—
 			copy_file( user, game_dir, dir );
 		}
 
@@ -386,14 +386,14 @@ void copy_all( json_object_ptr json, json_object_ptr user, enum direction dir )
 		game_list = game_list->next;
 	} // while ( game_list == NULL ) // game_list will be changed next to next.
 
-	// ƒƒO‘‚«‚İ
+	// ãƒ­ã‚°æ›¸ãè¾¼ã¿
 	write_log( user->string, "All", dir );
 }
 
 void copy_file( json_object_ptr user, json_object_ptr game, enum direction dir )
 {
 	char buf[LONGBUF];		// command
-	json_array_ptr file;	// ƒŠƒXƒg‚ğ‚½‚Ç‚é
+	json_array_ptr file;	// ãƒªã‚¹ãƒˆã‚’ãŸã©ã‚‹
 	char c_game[SHORTBUF];
 	char c_directory[LONGBUF];
 	char c_file[LONGBUF];
@@ -449,7 +449,7 @@ void copy_file( json_object_ptr user, json_object_ptr game, enum direction dir )
 //
 //	assert( json_select_object( json, "log" )->type == JSON_OBJECT );
 //
-//	// ƒƒO‘‚«‚İ
+//	// ãƒ­ã‚°æ›¸ãè¾¼ã¿
 //	log = json_select_object(
 //			(json_object_ptr)json_select_object( json, "log" )->value, game );
 //	if ( log == NULL ) { // If game title doesn't exist, create it.
@@ -516,7 +516,7 @@ void write_log( char *user, char *game, enum direction dir )
 //			break;
 //		}
 //		
-//		// ƒƒOƒtƒ@ƒCƒ‹“Ç‚İ‚İ-----------------
+//		// ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿-----------------
 //		assert( game->type == JSON_ARRAY );
 //		log_each = (json_array_ptr)game->value;
 //		while ( log_each != NULL ) {
@@ -569,7 +569,7 @@ void show_log( json_object_ptr json )
 			strcpy( title, game->string );
 		}
 		
-		// ƒƒOƒtƒ@ƒCƒ‹“Ç‚İ‚İ-----------------
+		// ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿-----------------
 		fseek( fp, 0, SEEK_SET );
 		while ( fgets( buf, LONGBUF, fp ) != NULL )
 		{
